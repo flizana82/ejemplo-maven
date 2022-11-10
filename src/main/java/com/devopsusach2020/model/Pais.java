@@ -4,7 +4,7 @@ import java.io.Serializable;
 public class Pais implements Serializable{
 
 	private static final long serialVersionUID = -2988002029080131424L;
-	
+	/*agregando comentario para qualityGate*/
 	private int deaths;
 	private int confirmed;
 	private String date;
@@ -12,6 +12,7 @@ public class Pais implements Serializable{
 	private String country;
 	private int recovered;
 	private int active;
+	/*agregando comentario para qualityGate*/ 
 		
 	public String getMensaje() {
 		return mensaje;

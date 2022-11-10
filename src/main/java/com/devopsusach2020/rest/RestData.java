@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.devopsusach2020.model.Pais;
 import com.devopsusach2020.model.Mundial;
 import com.google.gson.Gson;
-
+/*agregando comentario para qualityGate*/
 @RestController
 @RequestMapping(path = "/rest/mscovid")
 public class RestData {

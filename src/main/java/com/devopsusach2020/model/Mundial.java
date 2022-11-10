@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Mundial implements Serializable {
 
 	/**
-	 * 
+	 * agregando comentario para qualityGate
 	 */
 	private static final long serialVersionUID = 3908000903498620526L;
 	
@@ -31,5 +31,5 @@ public class Mundial implements Serializable {
 	public void setTotalRecovered(int totalRecovered) {
 		this.totalrecovered = totalRecovered;
 	}	
-
+	/*agregando comentario para qualityGate*/ 
 }
