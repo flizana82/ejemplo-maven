@@ -76,30 +76,7 @@ pipeline {
             steps {
                 echo 'Uploading to nexus in progress.....'
                 script {
-                    pom = readMavenPom file: "pom.xml";
-                    files = findFiles(glob: "build/*.${pom.packaging}");
-                    artifactPath = files[0].path;
-                    artifactExists = fileExists artifactPath;
-                    if(artifactExists) {
-                        nexusArtifactUploader(
-                            nexusVersion: NEXUS_VERSION,
-                            protocol: NEXUS_PROTOCOL,
-                            nexusUrl: NEXUS_URL,
-                            groupId: pom.groupId,
-                            version: pom.version,
-                            repository: NEXUS_REPOSITORY,
-                            credentialsId: NEXUS_CREDENTIAL_ID,
-                            artifacts: [
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: artifactPath,
-                                type: pom.packaging],
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: "pom.xml",
-                                type: "pom"]
-                            ]
-                        );
+                    nexusArtifactUploader credentialsId: 'jenkins-nexus-2', groupId: 'com.devopsusach2020', nexusUrl: 'nexus:3002', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops-usach-nexus', version: '0.0.1'
                         /*nexusPublisher(
                             nexusInstanceId: NEXUS_INSTANCE_ID,
                             nexusRepositoryId: NEXUS_REPOSITORY,
