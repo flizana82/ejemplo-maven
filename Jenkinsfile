@@ -73,35 +73,7 @@ pipeline {
             }
         }
         stage("uploadNexus") {
-            steps {
-                echo 'Uploading to nexus in progress.....'
-                script {
-                    nexusArtifactUploader credentialsId: 'jenkins-nexus-2', groupId: 'com.devopsusach2020', nexusUrl: 'nexus:3002', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops-usach-nexus', version: '0.0.1'
-                        /*nexusPublisher(
-                            nexusInstanceId: NEXUS_INSTANCE_ID,
-                            nexusRepositoryId: NEXUS_REPOSITORY,
-                            packages: [
-                                [
-                                    $class: 'MavenPackage',
-                                    mavenAssetList: [
-                                        [classifier: '',
-                                        extension: '0.0.1',
-                                        filePath: artifactPath]
-                                        ],
-                                    mavenCoordinate:
-                                        [artifactId: pom.artifactId,
-                                        groupId: pom.groupId,
-                                        packaging: pom.packaging,
-                                        version: pom.version]
-                                 ]
-                            ]
-                        )*/
-                    echo '.....Artifact Uploaded successfully'
-                    } else {
-                        error "File: ${artifactPath}, could not be found";
-                    }
-                }
-            }
+            nexusArtifactUploader credentialsId: 'jenkins-nexus-2', groupId: 'com.devopsusach2020', nexusUrl: 'nexus:3002', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops-usach-nexus', version: '0.0.1'
         }
         /*stage('download & test') {
             steps {
