@@ -75,18 +75,9 @@ pipeline {
                 script {
                     pom = readMavenPom file: "pom.xml";
                     files = findFiles(glob: "build/*.${pom.packaging}");
-                    echo """${files[0].name},
-                            ${files[0].path},
-                            ${files[0].directory},
-                            ${files[0].length},
-                            ${files[0].lastModified}"""
                     artifactPath = files[0].path;
                     artifactExists = fileExists artifactPath;
                     if(artifactExists) {
-                        echo """File: ${artifactPath},
-                              group: ${pom.groupId},
-                              packaging: ${pom.packaging},
-                              version ${pom.version}"""
                         nexusPublisher(
                             nexusInstanceId: NEXUS_INSTANCE_ID,
                             nexusRepositoryId: NEXUS_REPOSITORY,
@@ -94,14 +85,9 @@ pipeline {
                                 [
                                     $class: 'MavenPackage',
                                     mavenAssetList: [
-                                        [classifier: '',
-                                        extension: '',
-                                        filePath: artifactPath]],
+                                        [classifier: '', extension: '', filePath: artifactPath]],
                                     mavenCoordinate:
-                                        [artifactId: pom.artifactId,
-                                        groupId: pom.groupId,
-                                        packaging: pom.packaging,
-                                        version: pom.version]
+                                        [artifactId: pom.artifactId, groupId: pom.groupId, packaging: pom.packaging, version: pom.version]
                                  ]
                             ]
                         )
