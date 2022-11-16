@@ -22,7 +22,7 @@ pipeline {
         }
         stage('test') {
             steps {
-                echo 'Source code testing in progress.....'
+                echo 'Source code testing in progress....'
                 script {
                     if(isUnix()) {
                         echo 'Unix OS'
