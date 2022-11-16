@@ -1,11 +1,8 @@
 pipeline {
     agent any
      environment {
-        NEXUS_VERSION = "nexus3"
-        NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "http://nexus:3002"
+        NEXUS_INSTANCE_ID = "nxs01"
         NEXUS_REPOSITORY = "devops-usach-nexus"
-        NEXUS_CREDENTIAL_ID = "jenkins-nexus"
     }
     stages {
         stage('compile') {
@@ -74,7 +71,10 @@ pipeline {
         }
         stage("uploadNexus") {
             steps {
-                nexusArtifactUploader credentialsId: 'jenkins-nexus-2', groupId: 'com.devopsusach2020', nexusUrl: 'nexus:3002', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops-usach-nexus', version: '0.0.1'
+                echo 'Uploading to nexus in progress.....'
+                script {
+                    nexusPublisher nexusInstanceId: 'nxs01', nexusRepositoryId: 'ejercicio-clase4-mod4', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '${WORKSPACE}/build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]], tagName: 'nxs1'
+                }
             }
         }
         /*stage('download & test') {
