@@ -1,7 +1,7 @@
 pipeline {
     agent any
      environment {
-        NEXUS_INSTANCE_ID = "nexus"
+        NEXUS_INSTANCE_ID = "nxs01"
         NEXUS_REPOSITORY = "devops-usach-nexus"
     }
     stages {
@@ -22,7 +22,7 @@ pipeline {
         }
         stage('test') {
             steps {
-                echo 'Source code testing in progress....'
+                echo 'Source code testing in progress.....'
                 script {
                     if(isUnix()) {
                         echo 'Unix OS'
@@ -85,9 +85,14 @@ pipeline {
                                 [
                                     $class: 'MavenPackage',
                                     mavenAssetList: [
-                                        [classifier: '', extension: '', filePath: artifactPath]],
+                                        [classifier: '',
+                                        extension: '',
+                                        filePath: artifactPath]],
                                     mavenCoordinate:
-                                        [artifactId: pom.artifactId, groupId: pom.groupId, packaging: pom.packaging, version: pom.version]
+                                        [artifactId: pom.artifactId,
+                                        groupId: pom.groupId,
+                                        packaging: pom.packaging,
+                                        version: pom.version]
                                  ]
                             ]
                         )
@@ -98,12 +103,12 @@ pipeline {
                 }
             }
         }
-        stage('download & test') {
+        /*stage('download & test') {
             steps {
                 script {
                     echo "Downloading artifact from nexus"
                 }
             }
-        }
+        }*/
     }
  }
