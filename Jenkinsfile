@@ -73,7 +73,9 @@ pipeline {
             }
         }
         stage("uploadNexus") {
-            nexusArtifactUploader credentialsId: 'jenkins-nexus-2', groupId: 'com.devopsusach2020', nexusUrl: 'nexus:3002', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops-usach-nexus', version: '0.0.1'
+            steps {
+                nexusArtifactUploader credentialsId: 'jenkins-nexus-2', groupId: 'com.devopsusach2020', nexusUrl: 'nexus:3002', nexusVersion: 'nexus3', protocol: 'http', repository: 'devops-usach-nexus', version: '0.0.1'
+            }
         }
         /*stage('download & test') {
             steps {
