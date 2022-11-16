@@ -1,8 +1,11 @@
 pipeline {
     agent any
      environment {
-        NEXUS_INSTANCE_ID = "nxs01"
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "http://nexus:3002"
         NEXUS_REPOSITORY = "devops-usach-nexus"
+        NEXUS_CREDENTIAL_ID = "jenkins-nexus"
     }
     stages {
         stage('compile') {
@@ -78,7 +81,26 @@ pipeline {
                     artifactPath = files[0].path;
                     artifactExists = fileExists artifactPath;
                     if(artifactExists) {
-                        nexusPublisher(
+                        nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: pom.groupId,
+                            version: pom.version,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: artifactPath,
+                                type: pom.packaging],
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: "pom.xml",
+                                type: "pom"]
+                            ]
+                        );
+                        /*nexusPublisher(
                             nexusInstanceId: NEXUS_INSTANCE_ID,
                             nexusRepositoryId: NEXUS_REPOSITORY,
                             packages: [
@@ -86,8 +108,9 @@ pipeline {
                                     $class: 'MavenPackage',
                                     mavenAssetList: [
                                         [classifier: '',
-                                        extension: '',
-                                        filePath: artifactPath]],
+                                        extension: '0.0.1',
+                                        filePath: artifactPath]
+                                        ],
                                     mavenCoordinate:
                                         [artifactId: pom.artifactId,
                                         groupId: pom.groupId,
@@ -95,7 +118,7 @@ pipeline {
                                         version: pom.version]
                                  ]
                             ]
-                        )
+                        )*/
                     echo '.....Artifact Uploaded successfully'
                     } else {
                         error "File: ${artifactPath}, could not be found";
